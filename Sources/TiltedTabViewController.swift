@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Motion
 
 /// Conform to this data source protocol to provide the tilted tab view data.
 public protocol TiltedTabViewControllerDataSource: class {
@@ -15,6 +16,9 @@ public protocol TiltedTabViewControllerDataSource: class {
     
     /// Provide an image to display in the tab. Use UIGraphicsImageRenderer to render a view's hierarchy to retrieve a snapshot before presenting the tab view, cache it, and return it here.
     func snapshotForTab(atIndex index: Int) -> UIImage?
+    
+    /// lalala
+    func motionIdentifierForTab(atIndex index: Int) -> String
     
     /// The title to be displayed on the tab
     func titleForTab(atIndex index: Int) -> String?
@@ -148,6 +152,7 @@ extension TiltedTabViewController {
         cell.delegate = self
         cell.title = dataSource?.titleForTab(atIndex: indexPath.item)
         cell.snapshot = dataSource?.snapshotForTab(atIndex: indexPath.item)
+        cell.snapshot.motionIdentifier = dataSource?.motionIdentifierForTab(atIndex: indexPath.item)
         
         // Only show gradient if in tilted tab layout
         cell.gradientLayer.isHidden = !(self.collectionView?.collectionViewLayout is TiltedTabTiltedCollectionViewLayout)
